@@ -115,7 +115,7 @@ $('#preview-toggle').addEventListener('click',()=>{
 });
 ['desktop','downloads'].forEach(loc=>$(`#${loc}-enabled`).addEventListener('change',()=>{update();$('#preview-toggle').textContent='Preview file moves ⌄';announce(`${eligible().length} sample files ready to organize.`);}));
 $('#appearance').addEventListener('click',()=>{const dark=$('#app-shell').classList.toggle('dark');$('#appearance').setAttribute('aria-label',`Switch demo to ${dark?'light':'dark'} appearance`);});
-$$('[name=schedule]').forEach(input=>input.addEventListener('change',()=>{$('#schedule-description').textContent=input.value==='Manual'?'Organize whenever you’re ready.':`Organize ${input.value.toLowerCase()} while Clearspace is running.`;announce(`${input.value} selected in the demo. No actual schedule is created.`);}));
+$$('[name=schedule]').forEach(input=>input.addEventListener('change',()=>{$('#schedule-description').textContent=input.value==='Manual'?'Organize whenever you’re ready.':`Organize ${input.value.toLowerCase()} while Mereday is running.`;announce(`${input.value} selected in the demo. No actual schedule is created.`);}));
 $$('[data-period]').forEach(button=>button.addEventListener('click',()=>{period=button.dataset.period;$$('[data-period]').forEach(b=>{b.classList.toggle('selected',b===button);b.setAttribute('aria-pressed',String(b===button));});updateReports();}));
 $$('[data-go-organize]').forEach(button=>button.addEventListener('click',()=>goTab('organize',true)));
 update();
