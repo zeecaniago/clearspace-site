@@ -1,0 +1,1412 @@
+/* Mereday demo: native app palette, typography, layout, and controls.
+   Scoped to the demo; the surrounding marketing page keeps its own design. */
+.demo-frame {
+  width: min(1160px, 100%);
+  margin-inline: auto;
+  scroll-margin-top: 104px;
+}
+#app-shell,
+#app-shell :where(*:not(svg):not(svg *)),
+#app-shell *::before,
+#app-shell *::after {
+  all: revert;
+  box-sizing: border-box;
+}
+#app-shell {
+  --app-bg: #fafbfe;
+  --app-side: #eef1f7;
+  --app-panel: #fff;
+  --app-raised: #e8edf6;
+  --app-line: #dce1eb;
+  --app-text: #242f43;
+  --app-muted: #5b677d;
+  --app-accent: #506dd0;
+  --app-selected: #e0e7f9;
+  --app-button: #4d66bd;
+  --app-button-text: #fff;
+  --images: #6788d6;
+  --documents: #9172ca;
+  --media: #bf794e;
+  --other: #418e7d;
+  display: block;
+  background: var(--app-bg);
+  color: var(--app-text);
+  font:
+    14px/1.5 -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+  border: 1px solid var(--app-line);
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 28px 80px #131d3520;
+  -webkit-font-smoothing: antialiased;
+}
+#app-shell.dark {
+  --app-bg: #15181e;
+  --app-side: #11141a;
+  --app-panel: #1c2028;
+  --app-raised: #262c35;
+  --app-line: #2c323d;
+  --app-text: #f0f3f8;
+  --app-muted: #a0aaba;
+  --app-accent: #a8baff;
+  --app-selected: #263148;
+  --app-button: #b7c5ff;
+  --app-button-text: #17233f;
+  --images: #8bafff;
+  --documents: #b29aff;
+  --media: #f0b38e;
+  --other: #8cd6c2;
+  color-scheme: dark;
+}
+#app-shell h3,
+#app-shell h4,
+#app-shell p {
+  margin: 0;
+}
+#app-shell h3 {
+  font-size: 30px;
+  line-height: 1.15;
+  font-weight: 600;
+  letter-spacing: -1px;
+}
+#app-shell h4 {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: -0.2px;
+}
+#app-shell button,
+#app-shell input,
+#app-shell select {
+  font: inherit;
+}
+#app-shell button {
+  cursor: pointer;
+  color: inherit;
+  border: 0;
+  background: none;
+  padding: 0;
+}
+#app-shell button:disabled {
+  cursor: default;
+  opacity: 0.45;
+}
+#app-shell button:hover:not(:disabled) {
+  filter: brightness(0.94);
+}
+#app-shell button:focus-visible,
+#app-shell input:focus-visible,
+#app-shell select:focus-visible {
+  outline: 3px solid var(--app-accent);
+  outline-offset: 4px;
+}
+#app-shell [hidden] {
+  display: none !important;
+}
+#app-shell .sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+#app-shell .app-icon {
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  flex-shrink: 0;
+  vertical-align: middle;
+}
+#app-shell .window-bar {
+  height: 38px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--app-side);
+  color: var(--app-muted);
+  font-size: 12px;
+  border-bottom: 1px solid var(--app-line);
+}
+#app-shell .traffic-lights {
+  position: absolute;
+  left: 16px;
+  display: flex;
+  gap: 7px;
+}
+#app-shell .traffic-lights i {
+  width: 11px;
+  height: 11px;
+  background: #ff5f57;
+  border-radius: 50%;
+}
+#app-shell .traffic-lights i:nth-child(2) {
+  background: #febc2e;
+}
+#app-shell .traffic-lights i:nth-child(3) {
+  background: #28c840;
+}
+#app-shell .app-layout {
+  display: grid;
+  grid-template-columns: 180px minmax(0, 1fr);
+  min-height: 730px;
+}
+#app-shell .app-sidebar {
+  display: flex;
+  flex-direction: column;
+  padding: 32px 12px 24px;
+  gap: 28px;
+  background: var(--app-side);
+  border-right: 1px solid var(--app-line);
+}
+#app-shell .app-wordmark {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 12px;
+  font-size: 20px;
+  font-weight: 650;
+  letter-spacing: -0.5px;
+}
+#app-shell .app-wordmark img {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+}
+#app-shell .brand-dark,
+#app-shell.dark .brand-light {
+  display: none;
+}
+#app-shell.dark .brand-dark {
+  display: block;
+}
+#app-shell .demo-navigation {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+#app-shell .demo-navigation button {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 13px;
+  font-size: 14px;
+  text-align: left;
+  border-radius: 7px;
+  color: var(--app-muted);
+}
+#app-shell .demo-navigation button[aria-selected="true"] {
+  background: var(--app-selected);
+  color: var(--app-accent);
+  font-weight: 600;
+}
+#app-shell .demo-navigation .app-icon {
+  width: 18px;
+  height: 18px;
+}
+#app-shell .sidebar-foot {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: auto;
+  padding: 24px 10px 0;
+  font-size: 12px;
+  color: var(--app-muted);
+}
+#app-shell .sidebar-foot .app-icon {
+  width: 15px;
+  height: 17px;
+}
+#app-shell .app-content {
+  padding: 34px 32px 28px;
+  min-width: 0;
+}
+#app-shell .demo-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 26px;
+}
+#app-shell .demo-heading .eyebrow {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 1.7px;
+  text-transform: uppercase;
+  color: var(--app-muted);
+  margin-bottom: 12px;
+}
+#app-shell .demo-heading p:not(.eyebrow) {
+  font-size: 14px;
+  color: var(--app-muted);
+  margin-top: 10px;
+}
+#app-shell .icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  min-width: 32px;
+  min-height: 32px;
+  color: var(--app-accent);
+  font-size: 24px;
+  border-radius: 5px;
+}
+#app-shell .icon-button:hover {
+  background: var(--app-selected);
+}
+#app-shell #appearance {
+  color: var(--app-muted);
+}
+#app-shell .organize-body {
+  display: grid;
+  grid-template-columns: minmax(240px, 1fr) minmax(270px, 1.15fr);
+  align-items: center;
+  gap: 42px;
+  padding: 7px 0 28px;
+}
+#app-shell .orbit-side {
+  width: 100%;
+  max-width: 278px;
+  margin: auto;
+}
+#app-shell .orbit {
+  display: grid;
+  place-items: stretch;
+  aspect-ratio: 1;
+  padding: 21px;
+  border-radius: 50%;
+  background: var(--app-raised);
+}
+#app-shell .orbit-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background: var(--app-bg);
+  border-radius: 50%;
+  gap: 5px;
+}
+#app-shell .orbit-inner img {
+  width: 100px;
+  height: 86px;
+  object-fit: contain;
+  display: block;
+  margin: -9px 0 -7px;
+}
+#app-shell .orbit-inner strong {
+  font-size: 30px;
+  letter-spacing: -0.8px;
+  font-weight: 500;
+  line-height: 1.2;
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+}
+#app-shell .orbit-inner span {
+  font-size: 12px;
+  color: var(--app-muted);
+  text-align: center;
+}
+#app-shell .legend {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px 8px;
+  margin-top: 15px;
+}
+#app-shell .legend button {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 5px;
+  border-radius: 4px;
+  font-size: 12px;
+  color: var(--app-muted);
+}
+#app-shell .legend button[aria-pressed="true"] {
+  background: var(--app-raised);
+}
+#app-shell .legend b {
+  margin-left: auto;
+  color: var(--app-text);
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+#app-shell .legend i,
+#app-shell .chart-legend i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  display: inline-block;
+  flex-shrink: 0;
+}
+#app-shell .blue {
+  background: var(--images);
+}
+#app-shell .purple {
+  background: var(--documents);
+}
+#app-shell .orange {
+  background: var(--media);
+}
+#app-shell .teal {
+  background: var(--other);
+}
+#app-shell .refresh-line {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 14px;
+  font-size: 12px;
+  color: var(--app-muted);
+}
+#app-shell .text-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  color: var(--app-accent);
+  font-size: 14px;
+  min-height: 30px;
+  text-align: left;
+}
+#app-shell .text-button .app-icon {
+  width: 16px;
+  height: 16px;
+}
+#app-shell .refresh-line .text-button {
+  font-size: 12px;
+}
+#app-shell .demo-actions h4 {
+  font-size: 18px;
+  letter-spacing: -0.4px;
+}
+#app-shell .demo-actions > p {
+  font-size: 14px;
+  color: var(--app-muted);
+  margin: 7px 0 16px;
+}
+#app-shell .location-option {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--app-panel);
+  border: 1px solid var(--app-line);
+  border-radius: 10px;
+  padding: 12px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+#app-shell .location-icon {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 40px;
+  border-radius: 8px;
+  background: var(--app-selected);
+  color: var(--app-accent);
+  flex-shrink: 0;
+}
+#app-shell .location-icon .app-icon {
+  width: 22px;
+  height: 22px;
+}
+#app-shell .location-option > span:nth-child(2) {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+#app-shell .location-option strong {
+  font-size: 14px;
+  font-weight: 500;
+}
+#app-shell .location-option small {
+  font-size: 12px;
+  color: var(--app-muted);
+  margin-top: 2px;
+}
+#app-shell .location-option input,
+#app-shell .startup-option input {
+  position: absolute;
+  right: 12px;
+  width: 36px;
+  height: 24px;
+  opacity: 0;
+  cursor: pointer;
+}
+#app-shell .switch {
+  margin-left: auto;
+  display: block;
+  width: 36px;
+  height: 20px;
+  border-radius: 20px;
+  background: var(--app-raised);
+  border: 1px solid var(--app-line);
+  flex-shrink: 0;
+  pointer-events: none;
+}
+#app-shell .switch:after {
+  content: "";
+  display: block;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--app-muted);
+  margin: 1px;
+  transition: transform 0.18s;
+}
+#app-shell input:checked + .switch {
+  background: var(--app-accent);
+}
+#app-shell input:checked + .switch:after {
+  background: #fff;
+  transform: translateX(16px);
+}
+#app-shell input:focus-visible + .switch {
+  outline: 3px solid var(--app-accent);
+  outline-offset: 4px;
+}
+#app-shell .button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 8px;
+  padding: 11px 16px;
+  min-height: 40px;
+  font-size: 14px;
+  font-weight: 600;
+  background: var(--app-button);
+  color: var(--app-button-text);
+}
+#app-shell .organize-button {
+  width: 100%;
+  margin-top: 16px;
+}
+#app-shell .button:disabled {
+  background: var(--app-raised);
+  color: var(--app-muted);
+  opacity: 1;
+}
+#app-shell .preview-toggle {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  margin-top: 9px;
+}
+#app-shell .preview-toggle[aria-expanded="true"] .app-icon,
+#app-shell #configure[aria-expanded="true"] .app-icon {
+  transform: rotate(180deg);
+}
+#app-shell .demo-actions .move-note {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 9px 0 0;
+  font-size: 12px;
+}
+#app-shell .move-note .app-icon {
+  width: 16px;
+  height: 16px;
+}
+#app-shell .section-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+#app-shell .destinations {
+  border-top: 1px solid var(--app-line);
+  padding-top: 16px;
+}
+#app-shell .destination-row {
+  display: grid;
+  grid-template-columns: 110px minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: center;
+  margin-top: 18px;
+  font-size: 14px;
+}
+#app-shell .destination-row > span {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--app-muted);
+}
+#app-shell .destination-row > span:nth-child(2) {
+  color: var(--app-text);
+  overflow-wrap: anywhere;
+}
+#app-shell .destination-row b {
+  font-weight: 400;
+}
+#app-shell .destination-row small {
+  font-size: 12px;
+  color: var(--app-muted);
+}
+#app-shell .demo-schedule {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  border-top: 1px solid var(--app-line);
+  padding-top: 18px;
+  margin-top: 24px;
+}
+#app-shell .demo-schedule p {
+  font-size: 12px;
+  color: var(--app-muted);
+  margin-top: 3px;
+}
+#app-shell .segments {
+  display: inline-flex;
+  flex-shrink: 0;
+  gap: 2px;
+  border: 1px solid var(--app-line);
+  border-radius: 7px;
+  padding: 3px;
+  margin: 0;
+  background: var(--app-side);
+  min-width: 0;
+}
+#app-shell .segments label {
+  position: relative;
+  display: flex;
+  cursor: pointer;
+}
+#app-shell .segments label input {
+  position: absolute;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  cursor: pointer;
+}
+#app-shell .segments label span,
+#app-shell .segments > button {
+  display: block;
+  padding: 6px 10px;
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--app-muted);
+  border-radius: 4px;
+  white-space: nowrap;
+}
+#app-shell .segments input:checked + span,
+#app-shell .segments > button[aria-pressed="true"] {
+  color: var(--app-text);
+  background: var(--app-raised);
+}
+#app-shell .segments input:focus-visible + span {
+  outline: 3px solid var(--app-accent);
+  outline-offset: 2px;
+}
+#app-shell .app-card {
+  background: var(--app-panel);
+  border: 1px solid var(--app-line);
+  border-radius: 10px;
+  padding: 16px;
+  margin-top: 22px;
+}
+#app-shell .sample-note {
+  font-size: 12px;
+  color: var(--app-muted);
+  line-height: 1.55;
+}
+#app-shell .folder-setting {
+  display: grid;
+  grid-template-columns: 80px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--app-line);
+  font-size: 12px;
+}
+#app-shell .folder-setting > span:nth-child(2) {
+  color: var(--app-muted);
+  overflow-wrap: anywhere;
+}
+#app-shell .secondary-button {
+  padding: 5px 9px;
+  background: var(--app-raised);
+  border: 1px solid var(--app-line);
+  border-radius: 5px;
+  font-size: 12px;
+  white-space: nowrap;
+}
+#app-shell .grouping-setting {
+  margin: 16px 0;
+}
+#app-shell #file-preview > .sample-note {
+  margin: 8px 0 12px;
+}
+#app-shell .inline-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+#app-shell .preview-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  font-size: 12px;
+  padding: 10px 0;
+  border-top: 1px solid var(--app-line);
+}
+#app-shell .preview-row > div {
+  min-width: 0;
+}
+#app-shell .preview-row strong {
+  font-size: 14px;
+  font-weight: 500;
+}
+#app-shell .preview-row p {
+  color: var(--app-muted);
+  overflow-wrap: anywhere;
+}
+#app-shell .preview-row .file-type {
+  font-size: 12px;
+  color: var(--app-muted);
+  flex-shrink: 0;
+}
+#app-shell .last-run {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+#app-shell .last-run > .app-icon {
+  color: var(--app-accent);
+}
+#app-shell .last-run strong {
+  font-weight: 500;
+}
+#app-shell .last-run p {
+  font-size: 12px;
+  color: var(--app-muted);
+}
+#app-shell .last-run button {
+  margin-left: auto;
+  white-space: nowrap;
+}
+#app-shell .empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 64px 20px;
+  gap: 14px;
+}
+#app-shell .empty-state > .app-icon {
+  width: 30px;
+  height: 30px;
+  color: var(--app-accent);
+}
+#app-shell .empty-state h4 {
+  font-size: 18px;
+  font-weight: 500;
+}
+#app-shell .empty-state p {
+  font-size: 14px;
+  color: var(--app-muted);
+}
+#app-shell .receipt-pagination {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--app-muted);
+  font-size: 12px;
+  margin: 20px 0 12px;
+}
+#app-shell .receipt-pagination > span:first-child {
+  margin-right: auto;
+}
+#app-shell .receipt-card {
+  margin-top: 14px;
+  padding: 14px;
+}
+#app-shell .receipt-card.focused {
+  border-color: var(--app-accent);
+}
+#app-shell .receipt-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+#app-shell .receipt-status {
+  font-size: 23px;
+  color: var(--app-accent);
+}
+#app-shell .receipt-info {
+  min-width: 0;
+  margin-right: auto;
+}
+#app-shell .receipt-info h4 {
+  font-size: 12px;
+  letter-spacing: 0;
+}
+#app-shell .receipt-info p {
+  font-size: 12px;
+  color: var(--app-muted);
+  overflow-wrap: anywhere;
+}
+#app-shell .receipt-header .secondary-button {
+  flex-shrink: 0;
+}
+#app-shell .receipt-details {
+  padding-top: 14px;
+  margin-top: 14px;
+  border-top: 1px solid var(--app-line);
+}
+#app-shell .receipt-details .preview-row {
+  font-size: 12px;
+}
+#app-shell .receipt-details .sample-note {
+  margin-block: 8px;
+}
+#app-shell .report-period {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 4px;
+}
+#app-shell #report-range {
+  font-size: 12px;
+  color: var(--app-muted);
+}
+#app-shell .report-overview {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin: 26px 0;
+}
+#app-shell .report-overview > div:first-child {
+  display: flex;
+  flex-direction: column;
+}
+#app-shell #report-total {
+  font-size: 54px;
+  font-weight: 500;
+  letter-spacing: -2px;
+  line-height: 1.1;
+  color: var(--app-accent);
+  font-variant-numeric: tabular-nums;
+}
+#app-shell .report-overview small {
+  font-size: 12px;
+  color: var(--app-muted);
+  margin-top: 5px;
+}
+#app-shell .source-totals {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 14px;
+}
+#app-shell .source-totals > div {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  color: var(--app-muted);
+}
+#app-shell .source-totals > div + div {
+  border-top: 1px solid var(--app-line);
+  padding-top: 14px;
+}
+#app-shell .source-totals .app-icon {
+  color: var(--app-accent);
+}
+#app-shell .source-totals > div + div .app-icon {
+  color: var(--other);
+}
+#app-shell .source-totals strong {
+  margin-left: auto;
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--app-text);
+  font-variant-numeric: tabular-nums;
+}
+#app-shell .rhythm-panel {
+  margin-top: 8px;
+}
+#app-shell .chart-legend {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 12px;
+  color: var(--app-muted);
+}
+#app-shell .chart-legend span {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+#app-shell .chart-wrap {
+  display: flex;
+  gap: 8px;
+  margin: 18px 0 34px;
+}
+#app-shell .chart-scale {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
+  width: 20px;
+  color: var(--app-muted);
+  font-size: 11px;
+}
+#app-shell .chart {
+  height: 160px;
+  flex: 1;
+  display: flex;
+  align-items: stretch;
+  gap: 4px;
+  border-bottom: 1px solid var(--app-line);
+  background: repeating-linear-gradient(
+    to top,
+    transparent 0,
+    transparent calc(25% - 1px),
+    var(--app-line) calc(25% - 1px),
+    var(--app-line) 25%
+  );
+  min-width: 0;
+}
+#app-shell .chart-day {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  min-width: 0;
+  padding: 0 2px;
+}
+#app-shell .chart-day[aria-pressed="true"] {
+  background: var(--app-selected);
+}
+#app-shell .chart-day .bar-stack {
+  width: 56%;
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: flex-start;
+  min-width: 3px;
+  border-radius: 3px 3px 0 0;
+  overflow: hidden;
+}
+#app-shell .chart-day .bar-desktop {
+  width: 100%;
+  background: var(--app-accent);
+}
+#app-shell .chart-day .bar-downloads {
+  width: 100%;
+  background: var(--other);
+}
+#app-shell .chart-day small {
+  position: absolute;
+  top: calc(100% + 7px);
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 11px;
+  color: var(--app-muted);
+}
+#app-shell .day-detail {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 56px;
+  padding: 10px;
+  background: var(--app-bg);
+  border-radius: 6px;
+}
+#app-shell .day-detail > div:first-child {
+  margin-right: auto;
+}
+#app-shell .day-detail strong {
+  font-size: 12px;
+  font-weight: 500;
+}
+#app-shell .day-detail p {
+  font-size: 12px;
+  color: var(--app-muted);
+}
+#app-shell .day-detail .text-button {
+  font-size: 12px;
+}
+#app-shell .report-route {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--app-line);
+  font-size: 12px;
+}
+#app-shell .report-route:last-child {
+  border: 0;
+}
+#app-shell .report-route .app-icon {
+  color: var(--app-accent);
+}
+#app-shell .report-route > span {
+  width: 80px;
+  color: var(--app-muted);
+  flex-shrink: 0;
+}
+#app-shell .report-route > div {
+  flex: 1;
+  min-width: 0;
+}
+#app-shell .report-route strong {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  overflow-wrap: anywhere;
+}
+#app-shell .report-route p {
+  color: var(--app-muted);
+  overflow-wrap: anywhere;
+}
+#app-shell .route-count {
+  padding: 4px 8px;
+  border-radius: 5px;
+  background: var(--app-selected);
+  font-weight: 500;
+}
+#app-shell #show-destinations {
+  margin-top: 12px;
+}
+#app-shell .latest-run {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-align: left;
+  width: 100%;
+  color: var(--app-text);
+  border: 1px solid var(--app-line);
+  background: var(--app-panel);
+}
+#app-shell .latest-run .app-icon {
+  color: var(--app-accent);
+}
+#app-shell .latest-run span {
+  font-size: 14px;
+}
+#app-shell .latest-run small {
+  display: block;
+  color: var(--app-muted);
+  font-size: 12px;
+}
+#app-shell .report-footnote {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 24px;
+}
+#app-shell .report-footnote p {
+  font-size: 12px;
+  color: var(--app-muted);
+}
+#app-shell .report-footnote button {
+  white-space: nowrap;
+  font-size: 12px;
+}
+#app-shell .settings-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 18px;
+}
+#app-shell .settings-card p {
+  font-size: 14px;
+  color: var(--app-muted);
+}
+#app-shell .settings-card .sample-note {
+  font-size: 12px;
+}
+#app-shell .startup-option {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  width: 100%;
+  padding-right: 0;
+  cursor: pointer;
+}
+#app-shell .startup-option input {
+  right: 0;
+}
+#app-shell .demo-footnote {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 18px;
+  background: var(--app-side);
+  border-top: 1px solid var(--app-line);
+  color: var(--app-muted);
+  font-size: 12px;
+}
+#app-shell dialog {
+  position: fixed;
+  inset: 0;
+  margin: auto;
+  width: min(440px, calc(100% - 32px));
+  max-height: calc(100vh - 40px);
+  overflow: auto;
+  background: var(--app-panel);
+  color: var(--app-text);
+  padding: 24px;
+  border: 1px solid var(--app-line);
+  border-radius: 12px;
+  box-shadow: 0 20px 70px #0005;
+}
+#app-shell dialog:not([open]) {
+  display: none;
+}
+#app-shell dialog::backdrop {
+  background: #11182780;
+  backdrop-filter: blur(3px);
+}
+#app-shell dialog h3 {
+  font-size: 23px;
+}
+#app-shell dialog p {
+  margin-top: 8px;
+  color: var(--app-muted);
+}
+#app-shell dialog label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 24px;
+}
+#app-shell dialog select {
+  padding: 9px;
+  background: var(--app-bg);
+  color: var(--app-text);
+  border: 1px solid var(--app-line);
+  border-radius: 6px;
+  width: 100%;
+}
+#app-shell .dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 24px;
+}
+@media (max-width: 1100px) {
+  #app-shell .app-layout {
+    grid-template-columns: 165px minmax(0, 1fr);
+  }
+  #app-shell .app-content {
+    padding: 30px 24px;
+  }
+  #app-shell .organize-body {
+    gap: 24px;
+    grid-template-columns: minmax(210px, 1fr) minmax(250px, 1.1fr);
+  }
+  #app-shell .orbit {
+    padding: 18px;
+  }
+  #app-shell .app-wordmark {
+    font-size: 18px;
+    padding-inline: 8px;
+  }
+  #app-shell .destination-row {
+    grid-template-columns: 90px 1fr auto;
+    gap: 8px;
+  }
+  #app-shell .demo-schedule {
+    flex-wrap: wrap;
+  }
+}
+@media (max-width: 920px) {
+  #app-shell .app-layout {
+    grid-template-columns: 1fr;
+  }
+  #app-shell .app-sidebar {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    border-right: 0;
+    border-bottom: 1px solid var(--app-line);
+    padding: 12px 16px;
+  }
+  #app-shell .demo-navigation {
+    flex-direction: row;
+    gap: 3px;
+  }
+  #app-shell .demo-navigation button {
+    padding: 9px 10px;
+    gap: 7px;
+  }
+  #app-shell .sidebar-foot {
+    display: none;
+  }
+  #app-shell .app-content {
+    min-height: 700px;
+  }
+  #app-shell .app-wordmark {
+    font-size: 16px;
+    padding: 0;
+  }
+  #app-shell .demo-navigation .app-icon {
+    width: 16px;
+    height: 16px;
+  }
+}
+@media (max-width: 680px) {
+  .demo-frame {
+    scroll-margin-top: 80px;
+  }
+  #app-shell .app-layout {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+  #app-shell .app-sidebar {
+    order: 2;
+    border-bottom: 0;
+    border-top: 1px solid var(--app-line);
+    padding: 8px 5px;
+  }
+  #app-shell .app-wordmark {
+    display: none;
+  }
+  #app-shell .demo-navigation {
+    width: 100%;
+    justify-content: space-around;
+    gap: 0;
+  }
+  #app-shell .demo-navigation button {
+    flex-direction: column;
+    gap: 4px;
+    padding: 7px 10px;
+    font-size: 12px;
+    min-width: 0;
+  }
+  #app-shell .demo-navigation .app-icon {
+    width: 19px;
+    height: 19px;
+  }
+  #app-shell .app-content {
+    padding: 26px 20px;
+    min-height: 660px;
+  }
+  #app-shell .demo-heading {
+    gap: 8px;
+    margin-bottom: 24px;
+  }
+  #app-shell .demo-heading h3 {
+    font-size: 27px;
+  }
+  #app-shell .demo-heading .eyebrow {
+    font-size: 11px;
+    letter-spacing: 1.3px;
+    margin-bottom: 10px;
+  }
+  #app-shell .demo-heading p:not(.eyebrow) {
+    font-size: 14px;
+  }
+  #app-shell .organize-body {
+    grid-template-columns: 1fr;
+    gap: 28px;
+    padding-top: 2px;
+  }
+  #app-shell .orbit-side {
+    max-width: 270px;
+  }
+  #app-shell .orbit {
+    padding: 21px;
+  }
+  #app-shell .demo-actions h4 {
+    font-size: 18px;
+  }
+  #app-shell .location-option {
+    padding: 13px;
+  }
+  #app-shell .destination-row {
+    grid-template-columns: 1fr auto;
+    gap: 4px 10px;
+    margin-top: 18px;
+  }
+  #app-shell .destination-row > span:first-child {
+    grid-column: 1/-1;
+    font-size: 12px;
+  }
+  #app-shell .destination-row > span:nth-child(2) {
+    padding-left: 30px;
+    font-size: 12px;
+  }
+  #app-shell .destination-row > span:nth-child(2) .app-icon {
+    display: none;
+  }
+  #app-shell .destination-row small {
+    font-size: 12px;
+  }
+  #app-shell .demo-schedule {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
+  }
+  #app-shell .demo-schedule .segments {
+    align-self: flex-start;
+  }
+  #app-shell .section-row {
+    gap: 8px;
+  }
+  #app-shell .section-row h4 {
+    font-size: 14px;
+  }
+  #app-shell .folder-setting {
+    grid-template-columns: 1fr auto;
+    gap: 6px;
+  }
+  #app-shell .folder-setting > span:nth-child(2) {
+    grid-row: 2;
+    grid-column: 1/-1;
+  }
+  #app-shell .folder-setting button {
+    grid-row: 1;
+    grid-column: 2;
+  }
+  #app-shell .grouping-setting {
+    flex-wrap: wrap;
+  }
+  #app-shell .preview-row {
+    gap: 10px;
+  }
+  #app-shell .preview-row strong {
+    font-size: 13px;
+  }
+  #app-shell .last-run {
+    flex-wrap: wrap;
+  }
+  #app-shell .last-run button {
+    margin-left: 32px;
+  }
+  #app-shell .report-period {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  #app-shell .report-overview {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+  #app-shell .source-totals {
+    gap: 12px;
+  }
+  #app-shell .chart-legend {
+    gap: 8px;
+    font-size: 11px;
+  }
+  #app-shell .chart-legend span {
+    gap: 4px;
+  }
+  #app-shell .chart-wrap {
+    gap: 5px;
+  }
+  #app-shell .chart {
+    gap: 1px;
+    height: 150px;
+  }
+  #app-shell .chart-day {
+    padding-inline: 1px;
+  }
+  #app-shell .chart-day small {
+    font-size: 10px;
+  }
+  #app-shell .chart-scale {
+    font-size: 10px;
+    width: 14px;
+  }
+  #app-shell .day-detail {
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  #app-shell .day-detail .inline-actions {
+    margin-left: auto;
+  }
+  #app-shell .day-detail > div:first-child {
+    min-width: 130px;
+  }
+  #app-shell .report-route {
+    gap: 7px;
+  }
+  #app-shell .report-route > span {
+    width: 58px;
+    font-size: 11px;
+  }
+  #app-shell .report-route > .app-icon {
+    display: none;
+  }
+  #app-shell .report-route strong {
+    font-size: 12px;
+  }
+  #app-shell .report-footnote {
+    flex-direction: column;
+    gap: 8px;
+  }
+  #app-shell .receipt-header {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  #app-shell .receipt-info {
+    width: calc(100% - 38px);
+    flex: 1;
+  }
+  #app-shell .receipt-header .secondary-button {
+    margin-left: 31px;
+  }
+  #app-shell .receipt-header .icon-button {
+    margin-left: auto;
+  }
+  #app-shell .receipt-pagination {
+    flex-wrap: wrap;
+  }
+  #app-shell .receipt-pagination > span:first-child {
+    width: 100%;
+  }
+  #app-shell .demo-footnote {
+    flex-direction: column;
+    gap: 2px;
+    text-align: center;
+    padding: 10px;
+    font-size: 11px;
+  }
+  #app-shell .app-card {
+    padding: 14px;
+  }
+  #app-shell .empty-state {
+    padding: 48px 8px;
+  }
+  #app-shell .rhythm-panel > .section-row {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  #app-shell *,
+  #app-shell *::before,
+  #app-shell *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+}

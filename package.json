@@ -1,0 +1,29 @@
+{
+  "name": "clearspace-site",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@11.25.0",
+  "engines": {
+    "node": ">=22 <25"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "build:static": "node scripts/build-static.mjs",
+    "start": "next start",
+    "preview:static": "node scripts/serve-static.mjs",
+    "test": "playwright test",
+    "format": "prettier --write app components lib scripts tests *.mjs *.json *.yml README.md",
+    "format:check": "prettier --check app components lib scripts tests *.mjs *.json *.yml README.md"
+  },
+  "dependencies": {
+    "next": "^15.5.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.56.0",
+    "prettier": "^3.6.0"
+  }
+}
