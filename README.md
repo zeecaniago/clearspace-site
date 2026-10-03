@@ -28,7 +28,7 @@ The production build is written to `.next/`. `pnpm start` runs the standard Next
 
 For Amplify Hosting:
 
-1. Push the migration branch when ready, then connect this repository and branch in Amplify.
+1. Connect `zeecaniago/clearspace-site` and its production branch, `main`, in Amplify Hosting. The public product name is Mereday and the planned primary domain is `mereday.app`.
 2. Set the application root to this repository's root, where `package.json` lives.
 3. Use the checked-in `amplify.yml`. It selects Node.js 24, installs the locked dependencies, runs `pnpm build`, and publishes `.next/` through Amplify's Next.js compute support.
 4. Leave `NEXT_OUTPUT` unset for this deployment mode. No application environment variables or backend services are required.
@@ -67,10 +67,10 @@ The demo retains its imperative DOM implementation to preserve behavior. Its com
 pnpm exec playwright install chromium
 pnpm format:check
 pnpm build
-pnpm start
-# In another terminal, with the Node server running:
 pnpm test
 ```
+
+Playwright starts and stops a production Next.js server on port 3000 automatically. Stop any existing server on that port before running this sequence. To test a server you started separately (including `pnpm dev`), set `TEST_BASE_URL=http://127.0.0.1:3000`; Playwright then uses that server without managing its lifecycle.
 
 Then verify the independent export:
 
@@ -82,6 +82,16 @@ TEST_BASE_URL=http://127.0.0.1:3001 pnpm test
 ```
 
 The browser suite checks prerendered content, local assets, 404s, preview filters, organization, undo, report totals, receipt pagination, sample-folder configuration, keyboard navigation, appearance settings, download dialogs, FAQ expansion, mobile navigation, and legacy anchors. It also fails on browser and hydration errors. The same tests can run against `pnpm dev` to exercise React's development lifecycle.
+
+## Continuous integration and production branch
+
+`.github/workflows/ci.yml` runs on pull requests targeting `main`, pushes to `main`, and manual dispatch. Its required check, **Site checks**, installs locked dependencies with Node.js 24 and pnpm 11.25.0, checks formatting (including the workflow), builds the production site, and runs the browser suite against that build on Ubuntu. Focused tests (`test.only`) fail in CI. Browser reports and failure screenshots/traces are retained as workflow artifacts for seven days.
+
+The `main` branch protection requires a pull request and a successful **Site checks** result from GitHub Actions, with the branch up to date before merging. Protection applies to administrators too, blocks force pushes and deletion, and requires review conversations to be resolved. A second person's approval is not required, so the repository owner can merge their own checked pull requests.
+
+For changes, create a branch, open a pull request, wait for **Site checks**, and merge into `main`. Keep the check name stable, or update the required branch check when renaming it. GitHub branch protection is a repository setting; the workflow file alone does not enable it.
+
+Once Amplify Hosting is connected to `main`, a merge triggers its build and deployment. The pull-request checks gate the merge; Amplify does not wait for the separate post-merge GitHub Actions run. This CI setup uses no AWS credentials and does not provision hosting or DNS.
 
 ## References
 
