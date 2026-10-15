@@ -1,5 +1,6 @@
 import ProductDemo from "../components/product-demo";
 import SiteInteractions from "../components/site-interactions";
+import SiteFooter from "../components/site-footer";
 
 export default function Home() {
   return (
@@ -383,25 +384,7 @@ export default function Home() {
           <p className="requirement">Mac download coming soon</p>
         </section>
       </main>
-      <footer className="site-footer wrap">
-        <a href="#" className="wordmark">
-          <img
-            src="/assets/clearspace-icon-32.svg"
-            width="28"
-            height="28"
-            alt=""
-          />
-          Mereday
-        </a>
-        <p>Made for Mac.</p>
-        <nav aria-label="Footer navigation">
-          <a href="#get">Download</a>
-          <a href="#why">The details</a>
-          <a href="#faq">Questions</a>
-          <a href="#tour">Try the demo</a>
-        </nav>
-        <small>© 2026 Mereday</small>
-      </footer>
+      <SiteFooter />
       <dialog
         id="download-dialog"
         aria-labelledby="download-title"
