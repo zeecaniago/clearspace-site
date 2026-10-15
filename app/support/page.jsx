@@ -74,10 +74,11 @@ export default function Support() {
       <section id="permissions">
         <h2>Can’t access a folder?</h2>
         <p>
-          Select the folder again in Mereday’s folder configuration and approve
-          the macOS folder picker. If it is on an external drive, connect that
-          drive first. Mereday remembers the folders you authorize, but a moved
-          folder or changed permission can require you to choose it again.
+          Select the folder again in Mereday’s folder configuration and confirm
+          your selection in the macOS folder picker. If it is on an external
+          drive, connect that drive first. Mereday remembers the folders you
+          authorize, but a moved folder or changed permission can require you to
+          choose it again.
         </p>
         <p>
           If a download is missing from the preview, it may still be in
@@ -149,19 +150,18 @@ export default function Support() {
         <h3>How do I restore a purchase?</h3>
         <p>
           Use the Apple Account that made the purchase, then open
-          <strong> Settings → Plans → Restore Purchases</strong>. Allow Apple’s
-          sign-in prompt if it appears. Restore can recover Lifetime or an
-          active subscription; it does not restart an expired trial or
+          <strong> Settings → Plans → Restore Purchases</strong>. Complete
+          Apple’s sign-in prompt if it appears. Restore can recover Lifetime or
+          an active subscription; it does not restart an expired trial or
           subscription. If plans do not load, check your connection and choose
           <strong> Refresh plans</strong>.
         </p>
         <h3>Can I request a refund?</h3>
         <p>
-          Apple handles App Store billing and refund decisions. Follow
+          Apple handles App Store billing and refund decisions. Follow{" "}
           <a href="https://support.apple.com/en-us/118223">
-            {" "}
             Apple’s refund instructions
-          </a>
+          </a>{" "}
           to request a refund. Eligibility depends on Apple’s rules and
           applicable consumer law. See our{" "}
           <a href="/terms/">Terms & purchases</a> page for the app license and
