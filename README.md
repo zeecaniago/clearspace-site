@@ -44,7 +44,7 @@ pnpm preview:static
 
 Open <http://localhost:3001>. Upload the **contents** of `out/` to the hosting bucket, including `index.html`, `404.html`, `_next/`, and `assets/`. No Node process runs in production in this mode. Both build modes use Next.js's `.next/` working directory; stop a running Next.js server before switching modes and rerun `pnpm build` before returning to `pnpm start`. The exported `out/` folder remains independently usable.
 
-For a private S3 bucket behind CloudFront, use an S3 REST origin with Origin Access Control, `index.html` as the distribution's default root object, and HTTPS. Configure missing-object responses to serve `/404.html` with a 404 status. This site has one page and in-page anchor links, so it does not require an SPA fallback. If you add nested routes later, map directory URLs such as `/about/` to their exported `/about/index.html` objects at CloudFront; S3 REST origins do not do that automatically.
+For a private S3 bucket behind CloudFront, use an S3 REST origin with Origin Access Control, `index.html` as the distribution's default root object, and HTTPS. Configure missing-object responses to serve `/404.html` with a 404 status. This site has `/support/`, `/privacy/`, and `/terms/` routes as well as the homepage. Map those directory URLs to their exported `index.html` objects at CloudFront (for example, `/support/` to `/support/index.html`); S3 REST origins do not do that automatically. Redirect the slashless variants to the directory URLs. Do not use an SPA fallback that serves the homepage for every URL.
 
 For S3 website hosting instead, configure `index.html` as the index document and `404.html` as the error document. S3 website endpoints need public-read access and do not provide HTTPS directly; CloudFront is the usual HTTPS front end.
 
@@ -54,6 +54,9 @@ Server Actions, request-dependent route handlers, runtime SSR, and similar serve
 
 - `app/page.jsx`: prerendered marketing page, navigation, and download dialog.
 - `app/layout.jsx`: metadata, icons, theme color, and shared styles.
+- `app/support/page.jsx`, `app/privacy/page.jsx`, `app/terms/page.jsx`: public help and policy routes.
+- `components/resource-page.jsx`, `components/site-footer.jsx`: shared help-page navigation and site footer.
+- `lib/support.js`: the support address, Apple Standard EULA link, and page metadata.
 - `components/product-demo.jsx`: React-rendered demo markup with browser initialization after hydration.
 - `lib/demo.js`: the original sample-file behavior, scoped to the demo and adapted to clean up event handlers, timers, and animation frames on unmount.
 - `components/site-interactions.jsx` and `lib/site.js`: menu, download dialog, and legacy anchor behavior with listener cleanup.
@@ -92,6 +95,21 @@ The `main` branch protection requires a pull request and a successful **Site che
 For changes, create a branch, open a pull request, wait for **Site checks**, and merge into `main`. Keep the check name stable, or update the required branch check when renaming it. GitHub branch protection is a repository setting; the workflow file alone does not enable it.
 
 Once Amplify Hosting is connected to `main`, a merge triggers its build and deployment. The pull-request checks gate the merge; Amplify does not wait for the separate post-merge GitHub Actions run. This CI setup uses no AWS credentials and does not provision hosting or DNS.
+
+## Step 8: support and privacy publication
+
+The live domain is `https://mereday.app`. These pages are prepared for the first App Store release:
+
+- Support URL: `https://mereday.app/support/`
+- Privacy Policy URL: `https://mereday.app/privacy/`
+- Purchase information: `https://mereday.app/terms/`
+- License: Apple's Standard EULA, linked from the Terms page. Leave App Store Connect on its standard license unless a custom EULA is deliberately chosen later.
+
+**Separate email setup task:** The owner approved publishing these pages before creating `support@mereday.app`. The Support and Privacy pages disclose that this inbox is not available yet. Create a mailbox or forwarding alias, verify incoming mail and replies, then remove both setup notices before App Store submission. The DNS check on October 15, 2026 returned no MX records. A page with a `mailto:` link does not create an inbox.
+
+The privacy copy reflects the native app's local file processing and receipts, Apple StoreKit, voluntary support email, AWS hosting, and the existing Google Fonts requests. Review the email retention wording when choosing the email service. There is no custom account, file-upload API, ad tracker, or analytics SDK in this implementation.
+
+After deployment, open all three URLs directly while signed out and check the contact link. Add the support and privacy URLs in App Store Connect and publish the matching in-app Settings links. Step 8 remains in progress until the public pages and contact channel work. Keep the homepage download dialog in coming-soon mode; release pricing, launch-offer dates, and the App Store download link belong to Step 13. At launch, update the pre-release wording on Support and Terms as well.
 
 ## References
 
